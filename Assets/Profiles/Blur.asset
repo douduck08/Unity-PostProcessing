@@ -16,6 +16,7 @@ MonoBehaviour:
   - {fileID: 114339554643745164}
   - {fileID: 114575520505144904}
   - {fileID: 114961898262104518}
+  - {fileID: 114695076928855398}
 --- !u!114 &114339554643745164
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -63,6 +64,28 @@ MonoBehaviour:
   iterations:
     overrideState: 1
     value: 5
+--- !u!114 &114695076928855398
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b322e23c064198e43b5d2aad550be8ee, type: 3}
+  m_Name: CircleBlur
+  m_EditorClassIdentifier: 
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 0
+  downsample:
+    overrideState: 1
+    value: 2
+  scale:
+    overrideState: 1
+    value: 2
 --- !u!114 &114961898262104518
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -78,7 +101,7 @@ MonoBehaviour:
   active: 1
   enabled:
     overrideState: 1
-    value: 1
+    value: 0
   iterations:
     overrideState: 1
-    value: 1
+    value: 3
