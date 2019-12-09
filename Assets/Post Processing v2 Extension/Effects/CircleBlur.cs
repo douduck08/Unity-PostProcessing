@@ -29,10 +29,12 @@ namespace UnityEngine.Rendering.PostProcessing {
             var height = context.height >> downsample;
 
             var cmd = context.command;
+            cmd.BeginSample ("Circle Blur");
             context.GetScreenSpaceTemporaryRT (cmd, nameIds[0], 0, context.sourceFormat, RenderTextureReadWrite.Default, FilterMode.Bilinear, width, height);
             cmd.BlitFullscreenTriangle (context.source, nameIds[0], sheet, 0);
             cmd.BlitFullscreenTriangle (nameIds[0], context.destination, sheet, 1);
             cmd.ReleaseTemporaryRT (nameIds[0]);
+            cmd.EndSample ("Circle Blur");
         }
     }
 }

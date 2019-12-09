@@ -26,7 +26,9 @@ namespace UnityEngine.Rendering.PostProcessing {
             sheet.properties.SetFloat ("_Strength", settings.distortionStrength);
 
             var cmd = context.command;
+            cmd.BeginSample ("Blackhole");
             cmd.BlitFullscreenTriangle (context.source, context.destination, sheet, 0);
+            cmd.EndSample ("Blackhole");
         }
     }
 }

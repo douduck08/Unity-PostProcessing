@@ -27,6 +27,7 @@ namespace UnityEngine.Rendering.PostProcessing {
             var width = context.width >> settings.downsample;
             var height = context.height >> settings.downsample;
             var cmd = context.command;
+            cmd.BeginSample ("Kawase Blur");
             context.GetScreenSpaceTemporaryRT (cmd, nameIds[0], 0, context.sourceFormat, RenderTextureReadWrite.Default, FilterMode.Bilinear, width, height);
             context.GetScreenSpaceTemporaryRT (cmd, nameIds[1], 0, context.sourceFormat, RenderTextureReadWrite.Default, FilterMode.Bilinear, width, height);
 
@@ -48,6 +49,7 @@ namespace UnityEngine.Rendering.PostProcessing {
 
             cmd.ReleaseTemporaryRT (nameIds[0]);
             cmd.ReleaseTemporaryRT (nameIds[1]);
+            cmd.EndSample ("Kawase Blur");
         }
     }
 }

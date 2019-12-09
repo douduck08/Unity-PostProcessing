@@ -25,7 +25,9 @@ namespace UnityEngine.Rendering.PostProcessing {
             sheet.properties.SetFloat ("_Scale", settings.scale);
 
             var cmd = context.command;
+            cmd.BeginSample ("Panini Projection");
             cmd.BlitFullscreenTriangle (context.source, context.destination, sheet, 0);
+            cmd.EndSample ("Panini Projection");
         }
     }
 }

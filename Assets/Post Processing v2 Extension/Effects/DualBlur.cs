@@ -28,6 +28,8 @@ namespace UnityEngine.Rendering.PostProcessing {
             var sheet = context.propertySheets.Get (shader);
 
             var cmd = context.command;
+            cmd.BeginSample ("Dual Blur");
+
             var iterations = settings.iterations;
             for (int i = 0; i < iterations; i++) {
                 var width = context.width >> (i + 1);
@@ -51,6 +53,7 @@ namespace UnityEngine.Rendering.PostProcessing {
             for (int i = 0; i < iterations; i++) {
                 cmd.ReleaseTemporaryRT (nameIds[i]);
             }
+            cmd.EndSample ("Dual Blur");
         }
     }
 }
