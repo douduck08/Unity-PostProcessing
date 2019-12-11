@@ -30,6 +30,9 @@ MonoBehaviour:
   enabled:
     overrideState: 1
     value: 1
+  outlineColor:
+    overrideState: 1
+    value: {r: 0, g: 0.33725977, b: 1, a: 1}
   iterations:
     overrideState: 1
-    value: 2
+    value: 3

@@ -6,14 +6,8 @@
         #include "Packages/com.unity.postprocessing/PostProcessing/Shaders/StdLib.hlsl"
 
         TEXTURE2D_SAMPLER2D(_MainTex, sampler_MainTex);
-        float4 _MainTex_TexelSize;
-        
         TEXTURE2D_SAMPLER2D(_OutlineMaskTex, sampler_OutlineMaskTex);
-        float4 _OutlineMaskTex_TexelSize;
-
         TEXTURE2D_SAMPLER2D(_BluredMaskTex, sampler_BluredMaskTex);
-        float4 _BluredMaskTex_TexelSize;
-
         half4 _OutlineColor;
 
         ENDHLSL
