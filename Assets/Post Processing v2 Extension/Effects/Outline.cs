@@ -7,10 +7,6 @@ namespace UnityEngine.Rendering.PostProcessing {
         public ColorParameter outlineColor = new ColorParameter () { value = Color.white };
         // [Range (0, 6)] public IntParameter downsample = new IntParameter () { value = 0 };
         [Range (1, 5)] public IntParameter iterations = new IntParameter () { value = 1 };
-
-        public override bool IsEnabledAndSupported (PostProcessRenderContext context) {
-            return enabled.value && context.camera.cameraType == CameraType.Game;
-        }
     }
 
     public sealed class OutlineRenderer : PostProcessEffectRenderer<Outline> {
