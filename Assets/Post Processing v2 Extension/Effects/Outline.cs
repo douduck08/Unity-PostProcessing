@@ -5,7 +5,7 @@ namespace UnityEngine.Rendering.PostProcessing {
     [PostProcess (typeof (OutlineRenderer), PostProcessEvent.AfterStack, "Custom/Outline")]
     public sealed class Outline : PostProcessEffectSettings {
         public ColorParameter outlineColor = new ColorParameter () { value = Color.white };
-        // [Range (0, 6)] public IntParameter downsample = new IntParameter () { value = 0 };
+        // [Range (0, 6)] public IntParameter downsample = new IntParameter () { value = 0 }; // Need copy depth
         [Range (1, 5)] public IntParameter iterations = new IntParameter () { value = 1 };
     }
 
@@ -43,11 +43,12 @@ namespace UnityEngine.Rendering.PostProcessing {
 
             var width = context.width;
             var height = context.height;
-            context.GetScreenSpaceTemporaryRT (cmd, maskRT, 24, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Default, FilterMode.Bilinear, width, height);
-            context.GetScreenSpaceTemporaryRT (cmd, bluredMaskRT, 24, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Default, FilterMode.Bilinear, width, height);
+            context.GetScreenSpaceTemporaryRT (cmd, maskRT, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Default, FilterMode.Bilinear, width, height);
+            context.GetScreenSpaceTemporaryRT (cmd, bluredMaskRT, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Default, FilterMode.Bilinear, width, height);
 
             var useResolvedDepth = RuntimeUtilities.IsResolvedDepthAvailable (context.camera);
             var depthMap = useResolvedDepth ? BuiltinRenderTextureType.ResolvedDepth : BuiltinRenderTextureType.Depth;
+
             var tempMask = bluredMaskRT; // borrowing bluredMask to use
             cmd.SetRenderTarget (tempMask, depthMap);
             cmd.ClearRenderTarget (false, true, Color.clear);
