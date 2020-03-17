@@ -7,6 +7,7 @@ Unity version: 2018.3.1f1
 * Dual Blur
 * Circle Blur (used in UE4 bloom effect)
 * Black Hole
+* Visualize World Position (ref: https://github.com/keijiro/DepthInverseProjection)
 
 [More info about blur post-processing](BlurPostProcessing.md)
 
