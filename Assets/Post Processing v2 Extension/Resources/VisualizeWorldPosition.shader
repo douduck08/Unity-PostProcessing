@@ -26,6 +26,7 @@
             float4x4 _InverseView;
             float _Grid;
             float _Width;
+            half _Opacity;
 
             float3 SetupRay(float3 vpos) {
                 // Render settings
@@ -98,11 +99,15 @@
                 float3 wpos = mul(_InverseView, float4(vpos, 1)).xyz;
 
                 wpos *= _Grid;
+
                 float3 fw = fwidth(wpos);
-                half3 grid = saturate(_Width - abs(0.5 - frac(wpos)) / fw);
+                half3 grid = step(1.0 - _Width, abs(1 - 2 * frac(wpos))) / length(fw) * _Opacity;
+
+                half3 normal = normalize(cross(ddx(wpos), ddy(wpos)));
+                grid *= 1 - abs(normal);
 
                 half4 c = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.texcoord);
-                c.rgb *= grid;
+                c.rgb += grid;
                 return c;
             }
             ENDHLSL

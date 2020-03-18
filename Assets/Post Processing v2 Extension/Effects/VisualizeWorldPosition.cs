@@ -6,6 +6,7 @@ namespace UnityEngine.Rendering.PostProcessing {
     public sealed class VisualizeWorldPosition : PostProcessEffectSettings {
         public FloatParameter grid = new FloatParameter () { value = 1f };
         public FloatParameter width = new FloatParameter () { value = 1f };
+        [Range (0f, 1f)] public FloatParameter opacity = new FloatParameter () { value = 1f };
     }
 
     public sealed class VisualizeWorldPositionRenderer : PostProcessEffectRenderer<VisualizeWorldPosition> {
@@ -17,9 +18,13 @@ namespace UnityEngine.Rendering.PostProcessing {
         }
 
         public override void Render (PostProcessRenderContext context) {
+            var gridScale = 1f / Mathf.Max (0.01f, settings.grid);
+            var scaledWidth = gridScale * Mathf.Max (0f, settings.width);
+
             var sheet = context.propertySheets.Get (shader);
-            sheet.properties.SetFloat ("_Grid", Mathf.Max (0f, settings.grid));
-            sheet.properties.SetFloat ("_Width", Mathf.Max (0f, settings.width));
+            sheet.properties.SetFloat ("_Grid", gridScale);
+            sheet.properties.SetFloat ("_Width", scaledWidth);
+            sheet.properties.SetFloat ("_Opacity", settings.opacity);
             sheet.properties.SetMatrix ("_InverseView", context.camera.cameraToWorldMatrix);
 
             var cmd = context.command;
