@@ -5,7 +5,6 @@ namespace UnityEngine.Rendering.PostProcessing {
     [PostProcess (typeof (OutlineRenderer), PostProcessEvent.AfterStack, "Custom/Outline")]
     public sealed class Outline : PostProcessEffectSettings {
         public ColorParameter outlineColor = new ColorParameter () { value = Color.white };
-        // [Range (0, 6)] public IntParameter downsample = new IntParameter () { value = 0 }; // Need copy depth
         [Range (1, 5)] public IntParameter iterations = new IntParameter () { value = 1 };
     }
 
@@ -21,10 +20,12 @@ namespace UnityEngine.Rendering.PostProcessing {
         public override void Init () {
             outlineShader = Shader.Find ("Hidden/Outline");
             blurShader = Shader.Find ("Hidden/DualBlur");
+
             outlineColorId = Shader.PropertyToID ("_OutlineColor");
             maskRT = Shader.PropertyToID ("_Mask1");
             bluredMaskRT = Shader.PropertyToID ("_Mask2");
-            nameIds = new [] {
+
+            nameIds = new[] {
                 Shader.PropertyToID ("_Temp1"),
                 Shader.PropertyToID ("_Temp2"),
                 Shader.PropertyToID ("_Temp3"),
@@ -46,10 +47,10 @@ namespace UnityEngine.Rendering.PostProcessing {
             context.GetScreenSpaceTemporaryRT (cmd, maskRT, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Default, FilterMode.Bilinear, width, height);
             context.GetScreenSpaceTemporaryRT (cmd, bluredMaskRT, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Default, FilterMode.Bilinear, width, height);
 
+            var tempMask = bluredMaskRT; // borrowing bluredMask to use
             var useResolvedDepth = RuntimeUtilities.IsResolvedDepthAvailable (context.camera);
             var depthMap = useResolvedDepth ? BuiltinRenderTextureType.ResolvedDepth : BuiltinRenderTextureType.Depth;
 
-            var tempMask = bluredMaskRT; // borrowing bluredMask to use
             cmd.SetRenderTarget (tempMask, depthMap);
             cmd.ClearRenderTarget (false, true, Color.clear);
             foreach (var entity in OutlineEntityManager.instance.entities) {
